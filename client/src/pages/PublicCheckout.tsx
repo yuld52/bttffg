@@ -814,7 +814,7 @@ export default function PublicCheckout() {
                               setMobilePhone("258" + digits);
                               setShowPhoneError(false);
                             }}
-                            placeholder="86 123 4567"
+                            placeholder={selectedPaymentMethod === "mpesa" ? "84xxxxxxx" : "87xxxxxxx"}
                             style={{
                               flex: 1,
                               height: "44px",
