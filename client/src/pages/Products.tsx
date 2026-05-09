@@ -270,9 +270,9 @@ export default function Products() {
                   <p className="text-[10px] text-zinc-500 mb-0.5">{formatPrice(product)}</p>
                   <h3 className="text-sm font-semibold text-white group-hover:text-purple-400 transition-colors leading-snug line-clamp-2">{product.name}</h3>
                 </div>
-                <div className="flex items-center justify-between px-3 py-2 border-t border-zinc-800/50 mt-1">
-                  {getStatusChip(product.status || 'pending')}
-                  <div className="flex gap-0.5">
+                <div className="flex flex-wrap items-center justify-between gap-y-1 px-3 py-2 border-t border-zinc-800/50 mt-1">
+                  <div className="shrink-0">{getStatusChip(product.status || 'pending')}</div>
+                  <div className="flex gap-0.5 shrink-0">
                     <Button size="icon" variant="ghost" title="Copiar link" className={checkout ? "text-zinc-400 hover:text-white hover:bg-zinc-800 h-7 w-7" : "text-zinc-700 cursor-not-allowed h-7 w-7"} onClick={(e) => { e.stopPropagation(); copyCheckoutLink(product.id); }}>
                       <Link2 className="w-3 h-3" />
                     </Button>
