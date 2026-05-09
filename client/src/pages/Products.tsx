@@ -342,24 +342,6 @@ export default function Products() {
               <ScrollArea className="h-[55vh]">
                 <div className="px-5 py-4 space-y-5">
 
-                  <div className="space-y-1.5">
-                    <Label className="text-xs font-bold text-zinc-400 uppercase tracking-wider">Título da página</Label>
-                    <Input value={editConfig.heroTitle || ""} onChange={(e) => set("heroTitle", e.target.value)} placeholder="Promoção por tempo limitado" className="bg-zinc-900 border-zinc-700 text-white placeholder:text-zinc-600 focus-visible:ring-emerald-500 h-10" />
-                  </div>
-
-                  <div className="space-y-1.5">
-                    <Label className="text-xs font-bold text-zinc-400 uppercase tracking-wider">Texto do botão de compra</Label>
-                    <Input value={editConfig.payButtonText || ""} onChange={(e) => set("payButtonText", e.target.value)} placeholder="Comprar agora" className="bg-zinc-900 border-zinc-700 text-white placeholder:text-zinc-600 focus-visible:ring-emerald-500 h-10" />
-                  </div>
-
-                  <div className="space-y-1.5">
-                    <Label className="text-xs font-bold text-zinc-400 uppercase tracking-wider">Cor principal</Label>
-                    <div className="flex items-center gap-3">
-                      <input type="color" value={editConfig.primaryColor || "#22a559"} onChange={(e) => set("primaryColor", e.target.value)} className="w-10 h-10 rounded-lg border border-zinc-700 bg-zinc-900 cursor-pointer p-0.5" />
-                      <Input value={editConfig.primaryColor || ""} onChange={(e) => set("primaryColor", e.target.value)} placeholder="#22a559" className="bg-zinc-900 border-zinc-700 text-white placeholder:text-zinc-600 focus-visible:ring-emerald-500 h-10 font-mono" />
-                    </div>
-                  </div>
-
                   <div className="grid grid-cols-2 gap-3">
                     <div className="space-y-1.5">
                       <Label className="text-xs font-bold text-zinc-400 uppercase tracking-wider">Moeda</Label>
@@ -440,10 +422,6 @@ export default function Products() {
                     ))}
                   </div>
 
-                  <div className="space-y-1.5">
-                    <Label className="text-xs font-bold text-zinc-400 uppercase tracking-wider">Texto do rodapé</Label>
-                    <Input value={editConfig.footerText || ""} onChange={(e) => set("footerText", e.target.value)} placeholder="Meteorfy © 2026. Todos os direitos reservados." className="bg-zinc-900 border-zinc-700 text-white placeholder:text-zinc-600 focus-visible:ring-emerald-500 h-10" />
-                  </div>
                 </div>
               </ScrollArea>
             </TabsContent>
