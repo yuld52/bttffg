@@ -506,16 +506,23 @@ export default function CheckoutEditor() {
 
             <div className="space-y-2">
               <Label className="text-xs text-muted-foreground">Produto Principal *</Label>
-              <Select value={productId} onValueChange={setProductId}>
-                <SelectTrigger className="bg-muted/50 border-border h-9 text-sm" data-testid="select-product">
-                  <SelectValue placeholder="Selecione um produto" />
-                </SelectTrigger>
-                <SelectContent className="bg-muted border-border">
-                  {products?.filter(p => p.status === 'approved').map((p) => (
-                    <SelectItem key={p.id} value={p.id.toString()}>{p.name}</SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+              {products?.filter(p => p.status === 'approved').length === 0 ? (
+                <div className="flex items-start gap-2 rounded-md border border-yellow-500/40 bg-yellow-500/10 px-3 py-2.5 text-xs text-yellow-400">
+                  <span className="mt-0.5">⚠️</span>
+                  <span>Você não possui produtos aprovados. Checkouts só podem ser criados para produtos aprovados pela equipe Meteorfy.</span>
+                </div>
+              ) : (
+                <Select value={productId} onValueChange={setProductId}>
+                  <SelectTrigger className="bg-muted/50 border-border h-9 text-sm" data-testid="select-product">
+                    <SelectValue placeholder="Selecione um produto aprovado" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-muted border-border">
+                    {products?.filter(p => p.status === 'approved').map((p) => (
+                      <SelectItem key={p.id} value={p.id.toString()}>{p.name}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              )}
             </div>
 
             <div className="space-y-2">

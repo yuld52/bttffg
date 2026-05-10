@@ -380,22 +380,7 @@ export async function registerRoutes(
       };
       const result = await storage.createProduct(productData);
 
-      // Auto-create a default checkout for the new product
-      try {
-        const slug = `produto-${result.id}`;
-        const baseUrl = `${req.headers['x-forwarded-proto'] || req.protocol}://${req.headers.host}`;
-        await storage.createCheckout({
-          productId: result.id,
-          ownerId: userId,
-          name: result.name,
-          slug,
-          publicUrl: `${baseUrl}/checkout/${slug}`,
-          active: true,
-          config: {},
-        });
-      } catch (checkoutErr: any) {
-        console.warn("[CREATE PRODUCT] Checkout auto-create skipped:", checkoutErr?.message);
-      }
+      // No auto-checkout: products start as 'pending' and only approved products can have checkouts
 
       res.status(201).json(result);
     } catch (err: any) {
@@ -484,6 +469,16 @@ export async function registerRoutes(
   app.post("/api/checkouts", requireAuth, async (req, res) => {
     try {
       const userId = String((req as any).user?.id || "");
+
+      // Block checkout creation for unapproved products
+      if (req.body.productId) {
+        const product = await storage.getProduct(parseInt(req.body.productId), userId);
+        if (!product) return res.status(404).json({ message: "Produto não encontrado" });
+        if (product.status !== "approved") {
+          return res.status(403).json({ message: "Apenas produtos aprovados podem ter checkout. Aguarde a aprovação do seu produto." });
+        }
+      }
+
       const baseUrl = `${req.headers['x-forwarded-proto'] || req.protocol}://${req.headers.host}`;
       const result = await storage.createCheckout({ ...req.body, ownerId: userId, publicUrl: `${baseUrl}/checkout/${req.body.slug}` });
       res.status(201).json(result);
