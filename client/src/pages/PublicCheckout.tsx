@@ -759,7 +759,7 @@ export default function PublicCheckout() {
 
                 const allMethods: string[] = product?.paymentMethods || ["paypal"];
                 // Methods that are live and functional — "em breve" ones are excluded
-                const LIVE_METHODS = new Set(["mpesa", "emola", "paypal"]);
+                const LIVE_METHODS = new Set(["mpesa", "emola"]);
                 // Only show methods we know how to render AND that are live
                 const knownMethods = allMethods.filter(m => METHOD_META[m] && LIVE_METHODS.has(m));
                 const isMobile = (m: string) => m === "mpesa" || m === "emola";
@@ -925,19 +925,6 @@ export default function PublicCheckout() {
                       </Button>
                     )}
 
-                    {/* PayPal button */}
-                    {(selectedPaymentMethod === "paypal" ||
-                      (!selectedPaymentMethod && knownMethods.includes("paypal")) ||
-                      knownMethods.length === 0) && (
-                      <PayPalVisual
-                        clientId={paypalConfig?.clientId}
-                        currency={currency}
-                        environment={paypalConfig?.environment}
-                        createOrder={handleCreateOrder}
-                        onApprove={handleApprove}
-                        locale={activeLanguage === 'pt' ? 'pt_BR' : activeLanguage === 'es' ? 'es_ES' : 'en_US'}
-                      />
-                    )}
                   </>
                 );
               })()}
