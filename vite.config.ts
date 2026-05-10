@@ -24,6 +24,10 @@ export default defineConfig({
       "@": path.resolve(import.meta.dirname, "client", "src"),
       "@shared": path.resolve(import.meta.dirname, "shared"),
       "@assets": path.resolve(import.meta.dirname, "attached_assets"),
+      "framer-motion": path.resolve(
+        import.meta.dirname,
+        "node_modules/framer-motion/dist/cjs/index.js",
+      ),
     },
   },
   root: path.resolve(import.meta.dirname, "client"),
@@ -31,29 +35,15 @@ export default defineConfig({
     outDir: path.resolve(import.meta.dirname, "dist/public"),
     emptyOutDir: true,
   },
+  optimizeDeps: {
+    include: ["framer-motion"],
+  },
   server: {
-    port: 8080,
+    host: "0.0.0.0",
+    port: 5000,
+    allowedHosts: true,
     hmr: {
       overlay: false,
-    },
-    proxy: {
-      "/api": {
-        target: "http://127.0.0.1:5000",
-        changeOrigin: true,
-        configure: (proxy, _options) => {
-          proxy.on('error', (err, _req, _res) => {
-            console.log('[Vite Proxy] Backend server error:', err.message);
-            console.log('[Vite Proxy] Make sure the backend server is running on port 5000');
-          });
-          proxy.on('proxyReq', (proxyReq, req, _res) => {
-            console.log('[Vite Proxy]', req.method, req.url, '-> backend');
-          });
-        },
-      },
-      "/uploads": {
-        target: "http://127.0.0.1:5000",
-        changeOrigin: true,
-      },
     },
     fs: {
       strict: true,
